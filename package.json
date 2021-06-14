@@ -1,14 +1,14 @@
 {
-  "name": "djs-client",
-  "version": "1.0.0",
-  "description": "DJS client version",
+  "name": "dsc-backup",
+  "version": "1.0.5",
+  "description": "DSC-BACKUP client version",
   "main": "djs.js",
   "scripts": {
     "test": "node djs.js",
     "start": "node djs.js"
   },
   "keywords": [
-    "DJS",
+    "dsc-backup",
     "descentralized",
     "database",
     "backup"
@@ -16,7 +16,7 @@
   "author": "svcu2310",
   "license": "MIT",
   "bin": "djs.js",
-  "homepage": "",
+  "homepage": "https://github.com/svcu/dsc-backup/",
   "dependencies": {
     "node-localstorage": "^2.2.1",
     "request-promise": "^4.2.6"
