@@ -18,31 +18,45 @@ class DSC{
         this.backup = [];
     }
 
-    isOnline(host){
-        let online = false
+    async isOnline(host){
+        let online = "offline";
+        let hostFix1 = host.replace("http://", "")
+        console.log(hostFix1)
+        let hostFix2 = hostFix1.replace(":3000","")
 
-        http.get({host: host, port:3000, path:"/"}, (res)=>{
+        await http.get({host: hostFix2, port:3000, path:"/"}, (res)=>{
             if(res.statusCode == 200 || res.statusCode){
-                online = true
-                console.log("ONLINE")
+                online = "online"
                 return true
+            }else{
+                return false
             }
         })
 
-        console.log(online)
+        console.log("OL:", online)
         return online
     }
 
     //Get Data
-    get(label, tk){
+    async get(label, tk){
 
         let env;
+        let state;
+        
+        await this.isOnline(this.genesisNode)
+        .then(response => {
+            state = "online"
+        }).catch(
+            state = "offline"
+        );
+
+        
 
         if(ls.getItem(label)){ //First search data in ls (Offline first)
             return ls.getItem(label)
         }else{ //If there is not data with the label requested in ls request it from genesisNode and storeIt in ls
             
-            if(this.isOnline(this.genesisNode)){
+            if(state == "online"){
                 const options = {
                     uri: this.genesisNode+"/data",
                     method: "get",
@@ -63,7 +77,7 @@ class DSC{
                 })
 
                 return env
-            }else{
+            }else if(status != "online" && this.nodes.length !=0){
                 this.nodes.forEach(node => {
                     if(this.isOnline(node+"/")){
                         const options = {
@@ -88,6 +102,8 @@ class DSC{
                         return env
                     }
                 })
+            }else{
+                return "NO NODE AVAIBLE TO MAKE THIS REQUEST, TRY LATER"
             }
 
           
@@ -96,11 +112,19 @@ class DSC{
     }
 
     //Post Data
-    set(data, tk){
+    async set(data, tk){
         let  rt = "";
         let options;
+        let state;
+        
+        await this.isOnline(this.genesisNode)
+        .then(response => {
+            state = "online"
+        }).catch(
+            state = "offline"
+        );
 
-        if(this.isOnline(this.genesisNode)){
+        if( state == "online"){
             options = {
                 uri: this.genesisNode+"/data",
                 method: "post",
@@ -128,7 +152,7 @@ class DSC{
 
       
 
-        rp(options)
+      await rp(options)
         .then(response=> {
             console.log(response);
             if(response == "OK"){

@@ -1,8 +1,8 @@
 {
   "name": "dsc-backup",
-  "version": "1.0.5",
+  "version": "1.0.8",
   "description": "DSC-BACKUP client version",
-  "main": "djs.js",
+  "main": "dsc-backup.js",
   "scripts": {
     "test": "node djs.js",
     "start": "node djs.js"
@@ -15,7 +15,7 @@
   ],
   "author": "svcu2310",
   "license": "MIT",
-  "bin": "djs.js",
+  "bin": "dsc-backup.js",
   "homepage": "https://github.com/svcu/dsc-backup/",
   "dependencies": {
     "node-localstorage": "^2.2.1",

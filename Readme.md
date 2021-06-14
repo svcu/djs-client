@@ -1,6 +1,6 @@
 # DSC-BACKUP
 
-DSC-BACKUP is a descentralized backup library. DSC-BACKUP conects to a server running DSC-BACKUP-GENESIS, this server is called genesis node, when you post data to your applicattion you are storing the data in localStorage, sending the data to the genesis node and the genesis node is sending the data to the backup nodes. When you search data, is searched in localStorage first and if that data not exists in localStorage is searched in the genesis node or backup nodes. With DSC-BACKUP you save your data preventing it to be lost
+DSC-BACKUP is a decentralized backup library. DSC-BACKUP connects to a server running DSC-BACKUP-GENESIS, this server is called genesis node, when you publish data in your application, it is storing the data in localStorage, sending the data to genesis node and genesis node it is sending the data to the backup nodes. When it looks for data, it looks first in the localStorage, and if that data does not exist in the localStorage, it looks at the genesis node or the backup nodes. With DSC-BACKUP you save your data preventing it from being lost
 
 
 # Initializing dsc-backup
@@ -30,14 +30,20 @@ const data = {
 }
 
 DSC.set(data, accessToken)
+.then(response=>{
+    "DO WHAT YOU WANT"
+})
 ```
 
-# Geting Data
+# Getting Data
 ### This will return an array of JSON objects with the label you requested
 ### Get Data
 
 ```js
 DSC.get("LABEL", "ACCESS TOKEN")
+.then(response => {
+    "DATA REQUESTED"
+})
 ```
 
 # Example
@@ -57,12 +63,18 @@ const data = {
 }
 
 DSC.set(data, accesToken)
+.then(response => {
+    res.send(response)
+})
 ```
 
 # Get
 ```js
 const accessToken = "YOUR ACCESS TOKEN"
 DSC.get("Jhon", accesToken)
+.then(response => {
+    res.send(response)
+})
 ```
 
 ## Response
