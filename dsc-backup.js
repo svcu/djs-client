@@ -1,5 +1,6 @@
 const rp = require("request-promise");
 const http = require("http");
+const crypto = require("crypto");
 let ls;
 if (typeof localStorage === "undefined" || localStorage === null) {
     var LocalStorage = require('node-localstorage').LocalStorage;
@@ -38,7 +39,7 @@ class DSC{
     }
 
     //Get Data
-    async get(label, tk){
+    async get(label, tk, secret){
 
         let env;
         let state;
@@ -63,15 +64,20 @@ class DSC{
                     json: true,
                     body:{
                         token: tk,
-                        label: label
+                        label: label,
+                        secret: secret
                     }
                 }
                 console.log("OK")
                 rp(options)
                 .then(response => {
                     console.log(response);
-                    ls.setItem(label, response);
                     this.data.push(response);
+                   /* const decrypter = crypto.createDecipher("aes-256-gcm", secret)
+                    env = decrypter.update(response, "hex", "utf8") + decrypter.final("utf8");
+                    response = decrypter.update(response, "hex", "utf8") + decrypter.final("utf8");*/
+                    ls.setItem(label, response);
+
                     env = response
                     return response;
                 })
@@ -86,16 +92,20 @@ class DSC{
                             json: true,
                             body:{
                                 "token": tk,
-                                "label": label
+                                "label": label,
+                                "secret" : secret
                             }
                         }
                 
                         rp(options)
                         .then(response => {
                             console.log(response);
-                            ls.setItem(label, JSON.stringify(response));
                             this.data.push(response);
-                            env = response
+                           /* const decrypter = crypto.createDecipheriv("aes-256-gcm", secret)
+                            env = decrypter.update(response, "hex", "utf8") + decrypter.final("utf8");
+                            response = decrypter.update(response, "hex", "utf8") + decrypter.final("utf8");*/
+                            ls.setItem(label, response);
+
                             return response;
                         })
 
@@ -112,7 +122,7 @@ class DSC{
     }
 
     //Post Data
-    async set(data, tk){
+    async set(data, tk, secret){
         let  rt = "";
         let options;
         let state;
@@ -131,7 +141,8 @@ class DSC{
                 json: true,
                 body: {
                     "token" : tk,
-                    "body" : data
+                    "body" : data, 
+                    "secret":secret
                 }
             }
         }else{

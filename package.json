@@ -1,6 +1,6 @@
 {
   "name": "dsc-backup",
-  "version": "1.0.8",
+  "version": "1.2.0",
   "description": "DSC-BACKUP client version",
   "main": "dsc-backup.js",
   "scripts": {
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/svcu/dsc-backup/",
   "dependencies": {
     "node-localstorage": "^2.2.1",
-    "request-promise": "^4.2.6"
+    "request-promise": "^4.2.6",
+    "crypto-js": "^4.0.0"
   }
 }
