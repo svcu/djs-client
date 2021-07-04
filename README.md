@@ -13,14 +13,18 @@ DSC.register("YOUR IP ADDRESS") //It will return an access token
 ```
 
 # Posting Data
+
+You must provide a secret key, with that, dsc-backup will encrypt your data 
+(DO NOT PROVIDE YOUR TOKEN AS SECRET KEY)
     
 ```js
 
 const accessToken = "YOUR ACCESS TOKEN"
+const secret = "YOUR APP SECRET KEY"
 
 const data = {
     "label" : "THE LABEL OF YOUR DATA (DATA NAME TO SEARCH IT LATER)",
-    "access" : "OPEN OR CLOSED" //Open: everyone can access, Closed: only apps with your token can access,
+    "access" : "open OR closed" //Open: everyone can access, Closed: only apps with your token can access,
     "type" : "CATEGORY OF THE DATA",
     "data" : { //Data goes here
         "name" : "John",
@@ -29,7 +33,7 @@ const data = {
     }
 }
 
-DSC.set(data, accessToken)
+DSC.set(data, accessToken, secret)
 .then(response=>{
     "DO WHAT YOU WANT"
 })
@@ -40,7 +44,7 @@ DSC.set(data, accessToken)
 ### Get Data
 
 ```js
-DSC.get("LABEL", "ACCESS TOKEN")
+DSC.get("LABEL", "ACCESS TOKEN", "SECRET KEY")
 .then(response => {
     "DATA REQUESTED"
 })
@@ -50,10 +54,11 @@ DSC.get("LABEL", "ACCESS TOKEN")
 # Post
 ```js
 const accessToken = "YOUR ACCESS TOKEN"
+const secret = "YOUR SECRET KEY"
 
 const data = {
     "label" : "Jhon",
-    "access" : "Closed" 
+    "access" : "closed" 
     "type" : "user",
     "data" : { 
         "name" : "John",
@@ -62,7 +67,7 @@ const data = {
     }
 }
 
-DSC.set(data, accesToken)
+DSC.set(data, accesToken, secret)
 .then(response => {
     res.send(response)
 })
@@ -71,7 +76,9 @@ DSC.set(data, accesToken)
 # Get
 ```js
 const accessToken = "YOUR ACCESS TOKEN"
-DSC.get("Jhon", accesToken)
+const secret = "YOUR SECRET KEY"
+
+DSC.get("Jhon", accesToken, secret)
 .then(response => {
     res.send(response)
 })
@@ -79,6 +86,8 @@ DSC.get("Jhon", accesToken)
 
 ## Response
 ```json
+//Decrypted response
+
 [
     {
          "name" : "John",
@@ -98,3 +107,9 @@ DSC.get("Jhon", accesToken)
 ## DSC-BACKUP-GENESIS Github page
 
 https://github.com/svcu/dsc-backup-genesis
+
+## DSC-BACKUP Github page
+https://github.com/svcu/dsc-backup
+
+
+
