@@ -111,5 +111,8 @@ https://github.com/svcu/dsc-backup-genesis
 ## DSC-BACKUP Github page
 https://github.com/svcu/dsc-backup
 
+# DONATIONS
 
+## Ethereum: 0x3c2f194F8a7B55709bE3CB358c7a617B9626BF5F
+## Bitcoin: 1Q9AQxn2XtTMTjEt9K3cz1eeur4hnHpHK8
 

@@ -1,6 +1,8 @@
 const rp = require("request-promise");
 const http = require("http");
 const crypto = require("crypto");
+const isreachable = require("is-reachable");
+
 let ls;
 if (typeof localStorage === "undefined" || localStorage === null) {
     var LocalStorage = require('node-localstorage').LocalStorage;
@@ -14,7 +16,7 @@ class DSC{
     constructor(genesisNode){
         this.genesisNode = genesisNode;
         this.data = [];
-        this.nodes = [];
+        this.nodes = ["http://localhost:3001"];
         this.tokens = [];
         this.backup = [];
     }
@@ -25,14 +27,31 @@ class DSC{
         console.log(hostFix1)
         let hostFix2 = hostFix1.replace(":3000","")
 
-        await http.get({host: hostFix2, port:3000, path:"/"}, (res)=>{
+       const is = await isreachable(host).catch(onRejected => console.log("rejected"));
+
+       if(is){
+           online="online"
+       }
+
+       /* const req = http.request({host: hostFix2, port: 3000, path: "/"}, (res)=>{
+            online = "online";
+            return true
+        })
+
+        req.on("error", (res)=>{
+            return false
+        })
+
+        req.end();
+
+      /*  await http.get({host: hostFix2, port:3000, path:"/"}, (res)=>{
             if(res.statusCode == 200 || res.statusCode){
                 online = "online"
                 return true
             }else{
                 return false
             }
-        })
+        })*/
 
         console.log("OL:", online)
         return online
